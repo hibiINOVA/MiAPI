@@ -21,7 +21,7 @@ namespace MyApp.Namespace
         public IActionResult Add([FromBody] string nombre)
         {
             alumnos.Add(nombre);
-            return Ok(new { message = "Alumno agregado." });
+            return Ok(new { message = "Alumno agregado.", total = alumnos.Count });
         }
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] string nombre)
@@ -34,7 +34,7 @@ namespace MyApp.Namespace
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            if (id < 0 || id >= alumnos.Count){}
+            if (id < 0 || id >= alumnos.Count)
                 return NotFound("Alumno no encontrado...");
             alumnos.RemoveAt(id);
             return Ok(new { message = "Alumno eliminado." });

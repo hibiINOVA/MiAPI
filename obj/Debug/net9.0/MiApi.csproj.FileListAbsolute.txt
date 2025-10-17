@@ -33,3 +33,4 @@
 /home/hibi/Documents/snacks/C#/10mo cuatrimestre/propietarios/MiApi/bin/Debug/net9.0/Swashbuckle.AspNetCore.Swagger.dll
 /home/hibi/Documents/snacks/C#/10mo cuatrimestre/propietarios/MiApi/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerGen.dll
 /home/hibi/Documents/snacks/C#/10mo cuatrimestre/propietarios/MiApi/bin/Debug/net9.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/home/hibi/Documents/snacks/C#/10mo cuatrimestre/propietarios/MiApi/obj/Debug/net9.0/MiApi.sourcelink.json

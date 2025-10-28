@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MiApi.DTOs;
+using MiApi.Models;
 
 namespace MyApp.Namespace
 {
     public class Alumno
     {
-        public string Nombre { get; set; }
+        public string? Nombre { get; set; }
         public int Edad { get; set; }
     }
     
@@ -22,7 +24,7 @@ namespace MyApp.Namespace
             new Alumno { Nombre = "Luis", Edad = 24 },
             new Alumno { Nombre = "Sofia", Edad = 25 }
         };
-        [HttpGet]
+        [HttpGet()]
         public IEnumerable<Alumno> Get() => alumnos;
         [HttpGet("{id}")]
         public ActionResult<Alumno> GetById(int id)
@@ -56,7 +58,6 @@ namespace MyApp.Namespace
 
 
         [HttpGet("info")]
-        //public IActionResult Info([FromHeader(Name = "Amor")] string agente)
         public IActionResult Info([FromHeader(Name = "User-Agent")] string agente)
         {
             if (string.IsNullOrEmpty(agente))
@@ -64,6 +65,29 @@ namespace MyApp.Namespace
                 return BadRequest("No encontrado...");
             }
             return Ok($"Tu navegador es: {agente}");
+        }
+        [HttpGet("info2")]
+        public IActionResult Info2([FromHeader(Name = "Amor")] string agente)
+        {
+            if (string.IsNullOrEmpty(agente))
+            {
+                return BadRequest("No encontrado...");
+            }
+            return Ok($"Tu navegador es: {agente}");
+        }
+        [HttpGet("model")]
+        public IActionResult GetAlumno()
+        {
+            var alumno = new AlumnoM
+            {
+                Id = 1,
+                Nombre = "Juan",
+                Correo = "juan@gmail.com",
+                Password = "12345678"
+            };
+
+            var alumnoDTO = new AlumnoDTO(alumno);
+            return Ok(alumnoDTO);
         }
     }
 }

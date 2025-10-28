@@ -2,22 +2,24 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddTransient<MiApi.ISaludoService, MiApi.SaludoService>();
+
+builder.Services.AddScoped<MiApi.SaludoFormal>();
+builder.Services.AddScoped<MiApi.SaludoInformal>();
+
+builder.Services.AddScoped<MiApi.IContadorService, MiApi.ContadorService>();
+builder.Services.AddScoped<MiApi.ILlamada, MiApi.LlamadaService>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-// si quieres HTTPS, déjalo, si no, quítalo
-// app.UseHttpsRedirection();
 
 var summaries = new[]
 {

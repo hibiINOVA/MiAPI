@@ -13,6 +13,11 @@ builder.Services.AddScoped<MiApi.SaludoInformal>();
 builder.Services.AddScoped<MiApi.IContadorService, MiApi.ContadorService>();
 builder.Services.AddScoped<MiApi.ILlamada, MiApi.LlamadaService>();
 
+builder.Services.AddHttpClient("jsonplaceholder", client =
+{
+    client.BaseAddress = new Uri(builder.Configuration["ExternalApis:BaseUrl"])
+});
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())

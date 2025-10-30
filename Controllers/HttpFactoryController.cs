@@ -5,19 +5,23 @@ namespace MyApp.Namespace
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HttpEjemplo : ControllerBase
+    public class HttpFactoryController : ControllerBase
     {
+        private readonly HttpClient _HttpClient;
+        public HttpFactoryController(IHttpClientFactory httpClientFactory)
+        {
+            _HttpClient = httpClientFactory.CreateClient("jsonplaceholder");
+        }
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            using var httpClient = new HttpClient();
-            var response = await httpClient.GetAsync("https://jsonplaceholder.typicode.com/users");
+            var response = await _HttpClient.GetAsync("users");
             if (!response.IsSuccessStatusCode)
             {
                 return StatusCode((int)response.StatusCode, "Error al obtener los datos...");
             }
             var contenido = await response.Content.ReadAsStringAsync();
             return Ok(contenido);
-        }        
+        }
     }
 }

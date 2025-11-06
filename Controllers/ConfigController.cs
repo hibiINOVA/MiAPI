@@ -1,7 +1,7 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
-namespace MyApp.Namespace
+namespace MiApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

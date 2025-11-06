@@ -1,4 +1,4 @@
-﻿namespace MiApi.Models;
+﻿namespace MiApi;
 
 public class AlumnoM
 {

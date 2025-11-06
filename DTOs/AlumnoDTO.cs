@@ -1,14 +1,13 @@
-﻿using MiApi.Models;
-
-namespace MiApi.DTOs;
+﻿namespace MiApi;
 
 public class AlumnoDTO
 {
-    public string Nombre { get; set; }
-    public string Correo { get; set; }
-
-    public AlumnoDTO(AlumnoM alumno){
+    public string? Nombre { get; set; }
+    public string? Correo { get; set; }
+    public AlumnoDTO(AlumnoM alumno)
+    {
         Nombre = alumno.Nombre;
-        Correo = alumno.Correo;
+        Nombre = alumno.Correo;
+        
     }
 }

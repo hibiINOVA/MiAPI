@@ -10,14 +10,15 @@ namespace MyApp.Namespace
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            using var httpClient = new HttpClient();
-            var response = await httpClient.GetAsync("https://jsonplaceholder.typicode.com/users");
+            using var client = new HttpClient();
+            var response = await client.GetAsync("https://jsonplaceholder.typicode.com/users");
             if (!response.IsSuccessStatusCode)
             {
-                return StatusCode((int)response.StatusCode, "Error al obtener los datos...");
+                return StatusCode((int)response.StatusCode, "Error al obtener  datos.");
+                var contenido = await response.Content.ReadAsStringAsync();
+                return Ok(contenido);  
             }
-            var contenido = await response.Content.ReadAsStringAsync();
-            return Ok(contenido);
-        }        
+            return null; 
+        }
     }
 }

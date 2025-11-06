@@ -1,22 +1,36 @@
+using MiApi;
+using MiApi.Services;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
+using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<MiApi.ISaludoService, MiApi.SaludoService>();
 
-builder.Services.AddScoped<MiApi.SaludoFormal>();
-builder.Services.AddScoped<MiApi.SaludoInformal>();
+builder.Services.AddTransient<ISaludoService, SaludoService>();
 
-builder.Services.AddScoped<MiApi.IContadorService, MiApi.ContadorService>();
-builder.Services.AddScoped<MiApi.ILlamada, MiApi.LlamadaService>();
 
+builder.Services.AddKeyedTransient<ISaludoService, SaludoFormal>("Formal");
+builder.Services.AddKeyedTransient<ISaludoService, SaludoInformal>("Informal");
+
+builder.Services.AddSingleton<IContadorService, ContadorService>();
+builder.Services.AddScoped<ILlamadaService, LlamadaService>();
 builder.Services.AddHttpClient("jsonplaceholder", client =>
 {
     client.BaseAddress = new Uri(builder.Configuration["ExternalApis:BaseUrl"]);
 });
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseMySql(
+        builder.Configuration.GetConnectionString("ConexionMariaDB"),
+        ServerVersion.AutoDetect(builder.Configuration.GetConnectionString("ConexionMariaDB"))
+    )
+);
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
@@ -25,6 +39,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
 
 var summaries = new[]
 {
@@ -44,8 +59,8 @@ app.MapGet("/weatherforecast", () =>
         .ToArray();
     return forecast;
 })
-.WithName("GetWeatherForecast")
-.WithOpenApi();
+.WithName("GetWeatherForecast");
+
 app.MapControllers();
 app.Run();
 
